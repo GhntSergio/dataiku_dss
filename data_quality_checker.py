@@ -114,6 +114,18 @@ def generate_html_report(file_path, df):
 
     print(f"\n✅ Rapport généré : {report_path}")
 
+def run_quality_check(df, output_name="Dataiku_Dataset"):
+    generate_html_report(output_name, df)
+    return {
+        "missing": analyze_missing(df),
+        "duplicates": analyze_duplicates(df),
+        "types": analyze_types(df),
+        "cardinality": analyze_cardinality(df),
+        "stats": analyze_statistics(df),
+        "outliers": detect_outliers(df)
+    }
+
+
 def main():
     if len(sys.argv) < 2:
         print("❗ Usage : python data_quality_checker.py chemin/vers/fichier.csv")
